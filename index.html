@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fdf6e3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+        }
+
+        /* Hati melayang di background */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-heart {
+            position: absolute;
+            color: #ff6b81;
+            opacity: 0.3;
+            animation: floatUp 8s linear infinite;
+            font-size: 20px;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.4; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* Container Utama Buku */
+        .book {
+            display: flex;
+            width: 900px;
+            max-width: 95%;
+            min-height: 550px;
+            background-color: #fffef0;
+            box-shadow: 
+                0 15px 35px rgba(0,0,0,0.2),
+                inset 0 0 60px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 12px solid #2c3e50;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Halaman */
+        .page {
+            flex: 1;
+            padding: 50px 40px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Garis Tengah Buku */
+        .page-left {
+            border-right: 2px solid rgba(0,0,0,0.1);
+            background: linear-gradient(to right, #fffef0 96%, #e8e0cc 100%);
+        }
+
+        .page-right {
+            background: linear-gradient(to left, #fffef0 96%, #e8e0cc 100%);
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 36px;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        p {
+            line-height: 1.9;
+            color: #4a4a4a;
+            text-align: justify;
+            font-size: 15px;
+            margin-bottom: 18px;
+        }
+
+        /* Foto Polaroid Interaktif */
+        .photo-container {
+            text-align: center;
+            margin: 20px 0 30px;
+            perspective: 1000px;
+        }
+
+        .photo-frame {
+            display: inline-block;
+            background: #fff;
+            padding: 15px 15px 45px 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: rotate(-3deg);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .photo-frame:hover {
+            transform: rotate(0deg) scale(1.03) translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            z-index: 10;
+        }
+
+        .photo-container img {
+            width: 220px;
+            height: auto;
+            display: block;
+            border-radius: 2px;
+        }
+
+        /* Audio Player Interaktif */
+        .music-section {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 15px;
+            border: 1px dashed #c9b896;
+        }
+
+        .music-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .music-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .music-note {
+            margin-right: 8px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        /* Responsif HP */
+        @media (max-width: 768px) {
+            .book {
+                flex-direction: column;
+                width: 95%;
+                min-height: auto;
+            }
+            .page-left {
+                border-right: none;
+                border-bottom: 2px solid rgba(0,0,0,0.1);
+            }
+            .page {
+                padding: 30px 25px;
+            }
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Hearts -->
+    <div class="bg-hearts" id="hearts"></div>
+
+    <div class="book">
+        <div class="page page-left">
+            <h1>Happy Mensive, By!</h1>
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="us.jpg" alt="us.">
+                </div>
+            </div>
+            <hr style="border: none; border-top: 1px dashed #ccc; margin: 25px 0;">
+            
+            <div class="music-section">
+                <a href="https://open.spotify.com/playlist/1KDbzHyyTa3IIXuhZYcml1?si=N56MoFYGTli4stVjR4cMTQ" target="_blank" class="music-btn">
+                    <span class="music-note">🎵</span> Click for Our Playlist
+                </a>
+            </div>
+        </div>
+
+        <div class="page page-right">
+            <p>
+                And for this one month, i'm really glad i chose you. Not because it's perfect, but because it's real.
+            </p>
+            <p>
+                Because in a world where nothing is promised, we still decided to choose each other.
+            </p>
+            <p>
+                I'm glad that for those thirty days, we stayed curious, we stayed intentional, we stayed.
+            </p>
+            <p>
+                And if love is a choice, then for this month, choosing you has been my favorite one.
+            </p>
+            <hr style="border: none; border-top: 1px dashed #ccc; margin: 25px 0;">
+            <p>
+                Maybe it's only been a month, but i've learned that love doesn't have to be grand. It doesn't need big promises or complicated metaphors no one understands. 
+            </p>
+            <p>
+                <i>Sometimes, love is simple. It's about showing up.</i>
+            </p>
+            <p>
+                <b><i>It's the way we listen, the way we try, the way we choose to understand instead of walking away.</i></b>
+            </p>
+            <p>
+                And maybe, love is also this — sending you songs that reminds me of you, hoping you'll hear what i sometimes don't know how to say.
+            </p>
+            <p style="text-align: right; margin-top: 40px; font-family: 'Dancing Script', cursive; font-size: 24px; color: #764ba2;">
+                — your love
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Membuat hati melayang secara acak
+        function createHearts() {
+            const container = document.getElementById('hearts');
+            const heartCount = 15;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'bg-heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+        
+        createHearts();
+    </script>
+
+</body>
+</html>
